@@ -37,6 +37,5 @@ jobs:
 
       - name: Display the dispatching event
         env:
-          EVENT: ${{ github.event }}
-        run: |
-          echo "Event Date: $EVENT"
+          e: ${{ github.event }}
+        run: echo "Event Date - $e"
