@@ -34,7 +34,9 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
       - name: Display the dispatching event
+        env:
+          EVENT: ${{ github.event }}
         run: |
-          echo "Release Published: ${{ github.event.release.published }}"
-          echo "Event: ${{ github.event }}"
+          echo "Event Date: $EVENT"
