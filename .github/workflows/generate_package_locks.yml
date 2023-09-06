@@ -19,8 +19,8 @@ jobs:
       - name: Generate Lockfile JSON from existing directory structure
         id: generate-package-locks
         run: |
-          python scripts/packagemapping/packagemappisng.py | tee /tmp/packagelocks.json
-          base64 -w 0 /tmp/packagelocks.json | tee /tmp/packagelocks.json.b64
+          python scripts/packagemapping/packagemappisng.py > /tmp/packagelocks.json
+          base64 -w 0 /tmp/packagelocks.json > /tmp/packagelocks.json.b64
           echo "package_locks_b64=$(cat /tmp/packagelocks.json.b64)" >> $GITHUB_OUTPUT
       - name: Decode and display lockfile JSON
         run: |
