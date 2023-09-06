@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate_package_locks:
+  generate-package-locks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +26,7 @@ jobs:
       - name: Decode and display lockfile JSON (Sanity Check)
         run: |
           set -o pipefail
-          test -n "${{ steps.generate-package-locks.outputs.package_locks_b64s }}" \
-            || echo "::error:: package_locks_b64 did not contain base64 content generated from the previous step"
-          echo ${{ steps.generate-package-locks.outputs.package_locks_b64s }} | base64 -d | jq \
-            || echo "::error:: package_locks_b64 did not contain valid JSON once decoded"
+          test -n "${{ steps.generate-package-locks.outputs.package_locks_b64 }}" \
+            || { echo "::error:: output package_locks_b64 did not contain base64 content generated from the previous step"; exit 2 ;}
+          echo e3t9Cg== | base64 -d | jq \
+            || { echo "::error:: output package_locks_b64 did not contain valid JSON once decoded" ; exit 3 ;}
