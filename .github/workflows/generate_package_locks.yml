@@ -1,7 +1,7 @@
+# This workflow generates the JSON representation
 name: Generate Package Locks
 
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: ["main"]
   workflow_dispatch:
@@ -23,6 +23,7 @@ jobs:
           python scripts/packagemapping/packagemapping.py | tee /tmp/packagelocks.json
           base64 -w 0 /tmp/packagelocks.json | tee /tmp/packagelocks.json.b64
           echo "package_locks_b64=$(cat /tmp/packagelocks.json.b64)" >> $GITHUB_OUTPUT
-      - name: Decode and display lockfile JSON
+      - name: Decode and display lockfile JSON (Sanity Check)
         run: |
-          echo ${{ steps.generate-package-locks.outputs.package_locks_b64 }} | base64 -d | jq
+          test -n "${{ steps.generate-package-locks.outputs.package_locks_b64s }}"
+          echo ${{ steps.generate-package-locks.outputs.package_locks_b64s }} | base64 -d | jq
