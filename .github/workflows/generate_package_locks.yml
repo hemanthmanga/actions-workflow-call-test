@@ -18,7 +18,7 @@ jobs:
           pip install PyYAML
       - id: generate-package-locks
         run: |
-          python scripts/packagemapping/packagemapping.py | base64 | tee /tmp/packagelocks.json.b64
+          python scripts/packagemapping/packagemapping.py | base64 -w 0| tee /tmp/packagelocks.json.b64
           echo "package_locks_b64=$(cat /tmp/packagelocks.json.b64)" >> $GITHUB_OUTPUT
       - run: |
           echo ${{ steps.generate-package-locks.outputs.package_locks_b64 }} | base64 -d | jq
