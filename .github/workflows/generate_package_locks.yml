@@ -1,0 +1,22 @@
+name: Generate Package Locks
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - id: generate-package-locks
+        run: |
+          python scripts/packagemapping/packagemapping.py | base64 | tee /tmp/packagelocks.json.b64
+          echo "package_locks_b64=$(cat /tmp/packagelocks.json.b64)" >> $GITHUB_OUTPUT
+      - run: |
+          echo ${{ steps.generate-package-locks.outputs.package_locks_b64 }} | base64 -d | jq
