@@ -39,12 +39,12 @@ jobs:
     steps:
       - name: Get production lock file
         run: |
-          wget https://komish.github.io/actions-workflow-call-test/blob.json -O current-locks.json
+          wget https://komish.github.io/actions-workflow-call-test/lock.json -O current-locks.json
           set -o pipefail
           test -n "${{ needs.generate-package-locks.outputs.package_locks_b64 }}" \
             || { echo "::error::output package_locks_b64 did not contain base64 content generated from the previous step"; exit 2 ;}
           echo ${{ needs.generate-package-locks.outputs.package_locks_b64 }} | base64 -d | jq > generated-locks.json \
             || { echo "::error::output package_locks_b64 did not contain valid JSON once decoded" ; exit 3 ;}
-          diff -U0 current-locks.json generated-locks.json
+          diff current-locks.json generated-locks.json
 
         
