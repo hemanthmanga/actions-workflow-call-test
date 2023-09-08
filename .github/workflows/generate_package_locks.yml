@@ -35,10 +35,14 @@ jobs:
   
   compare-package-lock-manifests:
     needs: generate-package-locks
+    outputs:
+      needs-updating: ${{ steps.compare-package-locks.outputs.needs-updating }}
     runs-on: ubuntu-latest
     steps:
-      - name: Get production lock file
+      - name: Determine if package lock entries need updating
+        id: compare-package-locks
         run: |
+          needsupdating=false
           wget https://komish.github.io/actions-workflow-call-test/lock.json -O current-locks.json
           set -o pipefail
           test -n "${{ needs.generate-package-locks.outputs.package_locks_b64 }}" \
@@ -47,5 +51,13 @@ jobs:
             || { echo "::error::output package_locks_b64 did not contain valid JSON once decoded" ; exit 3 ;}
           jq .packages current-locks.json > current-packages.json
           jq .packages generated-locks.json > generated-packages.json
-          diff current-packages.json generated-packages.json
+          diff current-packages.json generated-packages.json || needsupdating=true
+          echo needs-updating=${needsupdating} >> $GITHUB_OUTPUT
+
+  read-needs-updating-result:
+    needs: compare-package-lock-manifests
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "update required - ${{ needs.compare-package-lock-manifests.outputs.needs-updating }}"
+          
         
