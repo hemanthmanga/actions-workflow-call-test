@@ -61,11 +61,35 @@ jobs:
       - run: echo "update required - ${{ needs.compare-package-lock-manifests.outputs.needs-updating }}"
 
   craft-pr-to-project:
-    needs: compare-package-lock-manifests
+    # TODO: This needs a token for a user who isn't the CI bot (e.g. GITHUB_TOKEN) but has commit permissions.
+    needs: 
+    - compare-package-lock-manifests
+    - generate-package-locks
     if: ${{ needs.compare-package-lock-manifests.outputs.needs-updating }} == "true"
     runs-on: ubuntu-latest
     steps:
-      - run: echo "It ran!"
+      - name: Clone gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          # token: tbd
+      - name: Create new branch
+        run: |
+          branchuuid=$(uuidgen)
+          git checkout -b lockupdate-${branchuuid}
+      - name: Overwrite existing lockfile and commit
+        run: |
+          set -o pipefail
+          test -n "${{ needs.generate-package-locks.outputs.package_locks_b64 }}" \
+            || { echo "::error::output package_locks_b64 did not contain base64 content generated from the previous step"; exit 2 ;}
+          echo ${{ needs.generate-package-locks.outputs.package_locks_b64 }} | base64 -d | jq > lock.json \
+            || { echo "::error::output package_locks_b64 did not contain valid JSON once decoded" ; exit 3 ;}
+          git add lock.json
+          git commit -m "updating package lock file"
+          git branch -v
+          git remote -v
+          
+
 
           
         
