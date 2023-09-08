@@ -54,12 +54,6 @@ jobs:
           diff current-packages.json generated-packages.json || needsupdating=true
           echo needs-updating=${needsupdating} >> $GITHUB_OUTPUT
 
-  read-needs-updating-result:
-    needs: compare-package-lock-manifests
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "update required - ${{ needs.compare-package-lock-manifests.outputs.needs-updating }}"
-
   craft-pr-to-project:
     # TODO: This needs a token for a user who isn't the CI bot (e.g. GITHUB_TOKEN) but has commit permissions.
     needs: 
@@ -81,7 +75,7 @@ jobs:
       - name: Create new branch
         run: |
           branchuuid=$(uuidgen)
-          git checkout -b lockupdate-${branchuuid}
+          git checkout -b update-locks-${branchuuid}
       - name: Overwrite existing lockfile and commit
         run: |
           set -o pipefail
@@ -94,7 +88,7 @@ jobs:
           git branch -v
           git remote -v
           
-
-
-          
-        
+      - name: Create Pull Request
+        run: |
+          echo "::error::implement me next!"
+          exit 1
