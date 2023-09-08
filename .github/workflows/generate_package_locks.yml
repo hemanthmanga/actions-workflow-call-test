@@ -59,5 +59,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "update required - ${{ needs.compare-package-lock-manifests.outputs.needs-updating }}"
+
+  craft-pr-to-project:
+    needs: compare-package-lock-manifests
+    if: ${{ needs.compare-package-lock-manifests.outputs.needs-updating }} == "true"
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "It ran!"
+
           
         
