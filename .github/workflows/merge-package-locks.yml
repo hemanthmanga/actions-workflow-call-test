@@ -1,17 +1,14 @@
-name: Merge Lockfile Updates
+name: Review Lockfile Updates
 
 on:
   pull_request:
-    branches: ["gh-pages"]
-    types:
-      - opened
-      - synchronize
-      - reopened
+    branches: 
+      - gh-pages
 
-concurrency:
-  # Prevent parallel executions of this and related tasks.
-  group: updating-chart-locks
-  cancel-in-progress: false
+# concurrency:
+#   # Prevent parallel executions of this and related tasks.
+#   group: updating-chart-locks
+#   cancel-in-progress: false
 
 jobs:
   determine-if-lockfile-update:
