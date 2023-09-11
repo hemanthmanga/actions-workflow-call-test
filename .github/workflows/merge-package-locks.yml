@@ -5,6 +5,8 @@ on:
     branches: ["gh-pages"]
     types:
       - opened
+      - synchronize
+      - reopened
 
 concurrency:
   # Prevent parallel executions of this and related tasks.
