@@ -6,6 +6,11 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+concurrency:
+  # Prevent parallel executions of this and related tasks.
+  group: updating-chart-locks
+  cancel-in-progress: false
+
 jobs:
   generate-package-locks:
     outputs:
