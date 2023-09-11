@@ -2,8 +2,6 @@ name: Review Lockfile Updates
 
 on:
   pull_request:
-    branches: 
-      - "*"
 
 # concurrency:
 #   # Prevent parallel executions of this and related tasks.
