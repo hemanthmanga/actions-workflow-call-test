@@ -6,6 +6,9 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+env:
+  BRANCH_NAME: pages-gh
+
 concurrency:
   # Prevent parallel executions of this and related tasks.
   group: updating-chart-locks
@@ -67,10 +70,10 @@ jobs:
     if: ${{ needs.compare-package-lock-manifests.outputs.needs-updating }} == "true"
     runs-on: ubuntu-latest
     steps:
-      - name: Clone gh-pages branch
+      - name: Clone ${{ env.BRANCH_NAME }} branch
         uses: actions/checkout@v3
         with:
-          ref: gh-pages
+          ref: ${{ env.BRANCH_NAME }}
           # token: tbd
       - name: Set Git Config
         # TODO update the user name and email
@@ -106,7 +109,7 @@ jobs:
         # Settings.
         run: |
           body=$(echo -e "${{ env.PR_BODY }}\n\nThe generated lockfile's md5sum is: **${{ steps.commit-and-push.outputs.new_lockfile_md5sum }}**\n")
-          gh pr create -B gh-pages -H ${{ steps.create-branch.outputs.branchname }} --title "${{ env.PR_TITLE }} - ${{ steps.commit-and-push.outputs.new_lockfile_md5sum }}" --body "${body}"
+          gh pr create -B ${{ env.BRANCH_NAME }} -H ${{ steps.create-branch.outputs.branchname }} --title "${{ env.PR_TITLE }} - ${{ steps.commit-and-push.outputs.new_lockfile_md5sum }}" --body "${body}"
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_CI_BOT_TOKEN }}
           PR_TITLE: Updating Chart Locks
