@@ -3,10 +3,10 @@ name: Review Lockfile Updates
 on:
   pull_request:
 
-# concurrency:
-#   # Prevent parallel executions of this and related tasks.
-#   group: updating-chart-locks
-#   cancel-in-progress: false
+concurrency:
+  # Prevent parallel executions of this and related tasks.
+  group: updating-chart-locks
+  cancel-in-progress: false
 
 jobs:
   determine-if-lockfile-update:
@@ -21,4 +21,3 @@ jobs:
             context.repo.repo,
             context.issue.number,
           })
-
