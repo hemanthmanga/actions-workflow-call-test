@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  BRANCH_NAME: pages-gh
+  BRANCH_NAME: gh-pages
 
 concurrency:
   # Prevent parallel executions of this and related tasks.
