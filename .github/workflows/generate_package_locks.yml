@@ -75,8 +75,8 @@ jobs:
       - name: Set Git Config
         # TODO update the user name and email
         run: |
-          git config user.name = "CI Bot Name"
-          git config user.email = cibot@example.com
+          git config user.name "CI Bot Name"
+          git config user.email cibot@example.com
 
       - name: Create new branch
         id: create-branch
