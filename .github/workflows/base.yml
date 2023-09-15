@@ -44,6 +44,7 @@ jobs:
   ensure-valid-submitter:
     runs-on: ubuntu-latest
     steps:
+      - run: tree .github
       - name: Ensure submission comes from a valid directory
         uses: ./.github/workflows/check-chart-locks.yml
         with:
