@@ -41,3 +41,14 @@ jobs:
         env:
           e: ${{ toJson(github.event) }}
         run: echo "Event Date - $e"
+  ensure-valid-submitter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure submission comes from a valid directory
+        uses: ./.github/workflows/check-chart-locks.yml
+        with:
+          # Real-world use case would introspect this data and then pass it to this workflow.
+          category: community
+          organization: examplecom
+          chartname: wildfly
+      
