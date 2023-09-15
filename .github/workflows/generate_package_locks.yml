@@ -60,7 +60,7 @@ jobs:
           jq .packages current-locks.json > current-packages.json
           jq .packages generated-locks.json > generated-packages.json
           diff current-packages.json generated-packages.json || needsupdating=true
-          echo needs-updating=${needsupdating} >> $GITHUB_OUTPUT
+          echo needs-updating=${needsupdating} | tee -a $GITHUB_OUTPUT
 
   craft-pr-to-project:
     # TODO: This needs a token for a user who isn't the CI bot (e.g. GITHUB_TOKEN) but has commit permissions.
