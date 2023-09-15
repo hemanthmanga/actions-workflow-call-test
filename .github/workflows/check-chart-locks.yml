@@ -39,9 +39,9 @@ jobs:
           lockpath=$(jq -r .packages.${{ inputs.chartname }} lock.json)
           test "${lockpath}" == "null" \
             && { echo "No lock found for chart ${{ inputs.chartname }}. We're clear to merge this in."; exit 0 ;}
-          test "${lockpath} = "${{ steps.assemble-path.outputs.dirpath }}" \
+          test "${lockpath}" = "${{ steps.assemble-path.outputs.dirpath }}" \
             && { echo "Lock found for chart ${{ inputs.chartname }} and submission is coming from the correct path ${{ steps.assemble-path.outputs.dirpath }}."; exit 0 ;}
           
-          echo "::error::Submission is invalid. The chart name '${{ inputs.chartname }}' is locked to submissions from path '${lockpath}' and this submission appears to come from '${{ steps.assemble-path.outputs.dirpath }}'"
+          echo "::error::Submission is invalid. The chart name '${{ inputs.chartname }}' is locked to submissions from path \'${lockpath}\' and this submission appears to come from '${{ steps.assemble-path.outputs.dirpath }}'"
           exit 1
   
