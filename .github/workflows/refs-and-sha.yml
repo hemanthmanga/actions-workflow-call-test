@@ -1,0 +1,16 @@
+name: "refs and shas"
+
+on:
+  pull_request_target
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo "full name: ${{ github.event.pull_request.head.repo.full_name }}"
+        echo "ref:  ${{ github.event.pull_request.head.ref }}"
+        echo "sha: ${{ github.event.pull_request.head.sha }}"
+        echo "login:" ${{ github.event.pull_request.user.login }}
+        echo "actor:" ${{ github.actor }}
+  
