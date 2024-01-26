@@ -1,0 +1,9 @@
+name: Show Calling Context
+description: Prints GitHub contexts for debugging
+runs:
+  using: composite
+  steps:
+  - name: Show Information
+    shell: bash
+    run: |
+      echo $(env | grep -v TOKEN | grep GITHUB | sed -e 's/=/ = /g' | column -t)
