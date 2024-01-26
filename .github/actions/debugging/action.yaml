@@ -8,4 +8,4 @@ runs:
     env:
     run: |
       env | grep -v TOKEN | grep GITHUB | sed -e 's/=/ = /g' | column -t
-      echo ${{ github }}
+      echo ${{ github.ref }}
