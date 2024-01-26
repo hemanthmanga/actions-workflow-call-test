@@ -5,7 +5,6 @@ runs:
   steps:
   - name: Show Information
     shell: bash
-    env:
     run: |
       env | grep -v TOKEN | grep GITHUB | sed -e 's/=/ = /g' | column -t
-      echo ${{ github.ref }}
+      echo '${{ toJSON(github) }}' | jq
