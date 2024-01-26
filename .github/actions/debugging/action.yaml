@@ -6,4 +6,4 @@ runs:
   - name: Show Information
     shell: bash
     run: |
-      echo $(env | grep -v TOKEN | grep GITHUB | sed -e 's/=/ = /g' | column -t)
+      echo -e $(env | grep -v TOKEN | grep GITHUB | sed -e 's/=/ = /g') | column -t
