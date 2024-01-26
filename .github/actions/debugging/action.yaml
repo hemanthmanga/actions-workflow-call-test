@@ -5,11 +5,7 @@ runs:
   steps:
   - name: Show Information
     shell: bash
+    env:
     run: |
       env | grep -v TOKEN | grep GITHUB | sed -e 's/=/ = /g' | column -t
-
-  - name: Show GitHub Context
-    uses: actions/github-script@v7
-    with:
-      script: |
-        console.log('hello, world!');
+      echo '${{ toJSON(github) }}' | jq
