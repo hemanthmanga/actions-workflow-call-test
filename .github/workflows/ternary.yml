@@ -1,0 +1,12 @@
+name: Checking Ternary
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: echo stuff
+      run: |
+        echo ${{ 'true' == 'true' && 'foo' || 'bar' }}
+      
