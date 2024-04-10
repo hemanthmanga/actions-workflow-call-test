@@ -1,6 +1,8 @@
 name: secret-access-testing
 
-on: [pull_request]
+on:
+  pull_request:
+    branches: ["*"]
 
 jobs:
   build-linux:
