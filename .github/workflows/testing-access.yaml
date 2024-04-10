@@ -1,0 +1,11 @@
+name: secret-access-testing
+
+on: [pull_request]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo "${{ secrets.SUPER_SECRETE_B64 }}"
+        echo "${{ secrets.SUPER_SECRETE_B64 }}" | base64 -d
