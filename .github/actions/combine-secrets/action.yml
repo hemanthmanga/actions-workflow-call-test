@@ -15,6 +15,7 @@ runs:
   steps:
   - name: Fail if secrets are empty
     if: secrets.PARTIAL_ONE == '' || secrets.PARTIAL_TWO == ''
+    shell: bash
     run: |
       echo "::error::A secret was not set"
       exit 1
