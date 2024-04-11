@@ -23,5 +23,5 @@ jobs:
 
     - name: Ensure secret was written
       run: |
-        echo ${{ steps.get-combined.secret.outputs.combined-file-path }}
-        cat ${{ steps.get-combined.secret.outputs.combined-file-path }}
+        echo ${{ steps.get-combined-secret.outputs.combined-file-path }}
+        cat ${{ steps.get-combined-secret.outputs.combined-file-path }}
