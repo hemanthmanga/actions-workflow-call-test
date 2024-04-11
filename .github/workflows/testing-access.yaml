@@ -31,6 +31,8 @@ jobs:
     - name: demo cert to file
       run: |
         echo "${{ secrets.DEMO_CERT }}" >> combined.pem
-        md5sum combined.pem
-        openssl verify combined.pem
+        echo -e "${{ secrets.DEMO_CERT }}" >> combined-2.pem
+        echo -en "${{ secrets.DEMO_CERT }}" >> combined-3.pem
+        md5sum *.pem
+        openssl verify *.pem
         
