@@ -17,6 +17,9 @@ jobs:
     - name: Get combined secret
       id: get-combined-secret
       uses: ./.github/actions/combine-secrets
+      with:
+        first-secret: ${{ secrets.PARTIAL_ONE }}
+        second-secret: ${{ secrets.PARTIAL_TWO }}
 
     - name: Ensure secret was written
       run: |
