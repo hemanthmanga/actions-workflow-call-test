@@ -25,3 +25,5 @@ jobs:
       run: |
         echo ${{ steps.get-combined-secret.outputs.combined-file-path }}
         cat ${{ steps.get-combined-secret.outputs.combined-file-path }}
+        echo "The secret was a base64 string, split into two. Now I will concatenate them and decode it"
+        cat ${{ steps.get-combined-secret.outputs.combined-file-path }} | tr -d '\n' | base64 -d
