@@ -16,7 +16,7 @@ jobs:
 
     - name: Get combined secret
       id: get-combined-secret
-      uses: ./.github/actions/conbine-secrets
+      uses: ./.github/actions/combine-secrets
 
     - name: Ensure secret was written
       run: |
