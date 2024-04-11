@@ -1,0 +1,33 @@
+name: Combines Secrets
+description: |
+  Combines PARTIAL_ONE and PARTIAL_TWO and writes to a file.
+inputs:
+  to-file:
+    description: Where to write the comnbined secret. Should be a filename.
+    default: "/tmp/combined-secret"
+    required: false
+outputs:
+  combined-file-path:
+    description: Where it was written. The full path.
+    value: ${{ steps.return-full-path.outputs.fullpath }}
+runs:
+  using: composite
+  steps:
+  - name: Fail if secrets are empty
+    if: secrets.PARTIAL_ONE == '' || secrets.PARTIAL_TWO == ''
+    run: |
+      echo "::error::A secret was not set"
+      exit 1
+  
+  - name: Write combined secret
+    id: combine-and-write
+    shell: bash
+    run: |
+      echo -en "${{ secrets.PARTIAL_ONE }}\n${{ secrets.PARTIAL_TWO }}" >> "${{ inputs.to-file }}
+      
+  - name: Return full path
+    id: return-full-path
+    shell: bash
+    run: |
+      set -eo pipefail
+      echo "fullpath=$(realpath ${{ inputs.to-file }})" | tee -a $GITHUB_OUTPUT
