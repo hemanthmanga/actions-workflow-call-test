@@ -9,7 +9,7 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
-    - run: actions/checkout@latest
+    - uses: actions/checkout@v4
     - run: |
         echo "${{ secrets.SUPER_SECRETE_B64 }}"
         echo "${{ secrets.SUPER_SECRETE_B64 }}" | base64 -d
