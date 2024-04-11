@@ -1,7 +1,11 @@
 name: Combines Secrets
 description: |
-  Combines PARTIAL_ONE and PARTIAL_TWO and writes to a file.
+  Combines first-secret and second-secret into a file.
 inputs:
+  first-secret:
+    required: true
+  second-secret:
+    required: true
   to-file:
     description: Where to write the comnbined secret. Should be a filename.
     default: "/tmp/combined-secret"
@@ -13,21 +17,11 @@ outputs:
 runs:
   using: composite
   steps:
-  - name: Fail if secrets are empty
-    env:
-      SECRETS_ARE_EMPTY: ${{ secrets.PARTIAL_ONE == '' || secrets.PARTIAL_TWO == '' }}
-    # if: ${{ env.SECRETS_ARE_EMPTY == 'true' }}
-    shell: bash
-    run: |
-      echo $SECRETS_ARE_EMPTY
-      echo "::error::A secret was not set"
-      exit 1
-  
   - name: Write combined secret
     id: combine-and-write
     shell: bash
     run: |
-      echo -en "${{ secrets.PARTIAL_ONE }}\n${{ secrets.PARTIAL_TWO }}" >> "${{ inputs.to-file }}
+      echo -en "${{ inputs.first-secret }}\n${{ inputs.second-secret }}" >> "${{ inputs.to-file }}
       
   - name: Return full path
     id: return-full-path
