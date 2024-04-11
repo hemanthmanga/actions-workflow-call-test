@@ -21,7 +21,7 @@ runs:
     id: combine-and-write
     shell: bash
     run: |
-      echo -en "${{ inputs.first-secret }}\n${{ inputs.second-secret }}" >> "${{ inputs.to-file }}
+      echo -en "${{ inputs.first-secret }}\n${{ inputs.second-secret }}" >> "${{ inputs.to-file }}"
       
   - name: Return full path
     id: return-full-path
