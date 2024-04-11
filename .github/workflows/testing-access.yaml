@@ -1,6 +1,7 @@
 name: secret-access-testing
 
 on:
+  workflow_dispatch:
   pull_request:
     branches: ["*"]
 
@@ -11,3 +12,12 @@ jobs:
     - run: |
         echo "${{ secrets.SUPER_SECRETE_B64 }}"
         echo "${{ secrets.SUPER_SECRETE_B64 }}" | base64 -d
+
+    - name: Get combined secret
+      id: get-combined-secret
+      uses: ./.github/actions/conbine-secrets
+
+    - name: Ensure secret was written
+      run: |
+        echo ${{ steps.get-combined.secret.outputs.combined-file-path }}
+        cat ${{ steps.get-combined.secret.outputs.combined-file-path }}
