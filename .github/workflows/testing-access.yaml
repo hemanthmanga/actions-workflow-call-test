@@ -27,3 +27,9 @@ jobs:
         cat ${{ steps.get-combined-secret.outputs.combined-file-path }}
         echo "The secret was a base64 string, split into two. Now I will concatenate them and decode it"
         cat ${{ steps.get-combined-secret.outputs.combined-file-path }} | tr -d '\n' | base64 -d
+
+    - name: demo cert to file
+      run: |
+        echo "${{ secrets.DEMO_CERT }}" >> combined.pem
+        openssl verify combined.pem
+        md5sum combined.pem
