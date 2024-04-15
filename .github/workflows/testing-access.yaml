@@ -14,31 +14,15 @@ jobs:
         echo "${{ secrets.SUPER_SECRETE_B64 }}"
         echo "${{ secrets.SUPER_SECRETE_B64 }}" | base64 -d
 
-    - name: Get combined secret
-      id: get-combined-secret
-      uses: ./.github/actions/combine-secrets
-      with:
-        first-secret: ${{ secrets.PARTIAL_ONE }}
-        second-secret: ${{ secrets.PARTIAL_TWO }}
-
-    - name: Ensure secret was written
+    - name: test demo
       run: |
-        echo ${{ steps.get-combined-secret.outputs.combined-file-path }}
-        cat ${{ steps.get-combined-secret.outputs.combined-file-path }}
-        echo "The secret was a base64 string, split into two. Now I will concatenate them and decode it"
-        cat ${{ steps.get-combined-secret.outputs.combined-file-path }} | tr -d '\n' | base64 -d
-
-    - name: demo cert to file
-      run: |
-        echo "${{ secrets.DEMO_CERT }}" >> combined.pem
-        echo -e "${{ secrets.DEMO_CERT }}" >> combined-2.pem
-        echo -en "${{ secrets.DEMO_CERT }}" >> combined-3.pem
-        md5sum *.pem
-
-    - name: demo cert 2 to file
-      run: |
-        echo "${{ secrets.DEMO_CERT_2 }}" >> combined.crt
-        echo -e "${{ secrets.DEMO_CERT_2 }}" >> combined-2.crt
-        echo -en "${{ secrets.DEMO_CERT_2 }}" >> combined-3.crt
-        md5sum *
-        
+        echo -en "${{ secrets.DEMO_CERT_2 }}" > /tmp/demo.crt
+        echo -en "${{ secrets.DEMO_PRIVKEY_2 }}" > /tmp/demo.key
+        md5sum *.crt *.key
+        curl -s \
+         -X GET \
+         --cert /tmp/demo.crt \
+         --key /tmp/demo.key \
+         --pass '${{ secrets.PEM_PASS }}' \
+         -H 'accept: application/json' \
+         'https://${{ secrets.API_HOST }}/v1/tools'
