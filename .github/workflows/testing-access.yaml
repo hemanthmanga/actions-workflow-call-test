@@ -18,7 +18,7 @@ jobs:
       run: |
         echo -en "${{ secrets.DEMO_CERT_2 }}" > /tmp/demo.crt
         echo -en "${{ secrets.DEMO_PRIVKEY_2 }}" > /tmp/demo.key
-        md5sum *.crt *.key
+        md5sum /tmp/demo.crt /tmp/demo.key
         curl -s \
          -X GET \
          --cert /tmp/demo.crt \
