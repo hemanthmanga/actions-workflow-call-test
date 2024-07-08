@@ -22,3 +22,4 @@ jobs:
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           oc: latest
+          skip_cache: true
