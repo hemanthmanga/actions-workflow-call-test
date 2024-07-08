@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-cv:
+  install-cv-ubuntu-latest:
     runs-on: ubuntu-latest
     steps:
       - name: Install chart-verifier
@@ -15,8 +15,48 @@ jobs:
           chart-verifier: 0.1.0
           
 
-  install-oc:
+  install-oc-ubuntu-latest:
     runs-on: ubuntu-latest
+    steps:
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: latest
+          skip_cache: true
+
+  install-cv-ubuntu-2404:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Install chart-verifier
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: github
+          skip_cache: true
+          chart-verifier: 0.1.0
+          
+
+  install-oc-ubuntu-2404:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: latest
+          skip_cache: true
+          
+  install-cv-ubuntu-2004:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install chart-verifier
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: github
+          skip_cache: true
+          chart-verifier: 0.1.0
+          
+
+  install-oc-ubuntu-2004:
+    runs-on: ubuntu-20.04
     steps:
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
