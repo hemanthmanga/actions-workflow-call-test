@@ -66,5 +66,3 @@ jobs:
         with:
           oc: latest
           skip_cache: true
-          oc: latest
-          skip_cache: true
