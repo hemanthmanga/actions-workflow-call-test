@@ -7,6 +7,9 @@ jobs:
   install-cv-ubuntu-latest-1-11:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16'
       - name: Install chart-verifier
         uses: redhat-actions/openshift-tools-installer@v1.11
         with:
