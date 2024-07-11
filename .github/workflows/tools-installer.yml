@@ -1,7 +1,7 @@
 name: Test OpenShift Tools Installer
 
 on:
-  workflow_dispatch:
+  push
 
 jobs:
   install-tools:
@@ -15,8 +15,11 @@ jobs:
         if: ${{ matrix.tool == 'cv' }}
         with:
           node-version: '16'
+      - name: Set version
+        id: set_version
+        run: echo "VERSION=${{ matrix.version }}" >> $GITHUB_ENV
       - name: Install tools
-        uses: redhat-actions/openshift-tools-installer@${{ matrix.version }}
+        uses: redhat-actions/openshift-tools-installer@v${{ env.VERSION }}
         with:
           source: github
           skip_cache: false
