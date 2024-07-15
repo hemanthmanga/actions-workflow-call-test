@@ -28,7 +28,7 @@ jobs:
           skip_cache: true
 
   install-cv-ubuntu-latest:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Install chart-verifier
         uses: redhat-actions/openshift-tools-installer@v1
