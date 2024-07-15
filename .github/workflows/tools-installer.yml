@@ -5,7 +5,7 @@ on:
 
 jobs:
   install-cv-ubuntu-latest-1-11:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -19,7 +19,7 @@ jobs:
           
 
   install-oc-ubuntu-latest-1-11:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1.11
@@ -28,7 +28,7 @@ jobs:
           skip_cache: true
 
   install-cv-ubuntu-latest:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install chart-verifier
         uses: redhat-actions/openshift-tools-installer@v1
@@ -39,7 +39,7 @@ jobs:
           
 
   install-oc-ubuntu-latest:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
@@ -48,7 +48,7 @@ jobs:
           skip_cache: false
 
   install-cv-ubuntu-2404:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install chart-verifier
         uses: redhat-actions/openshift-tools-installer@v1
@@ -59,7 +59,7 @@ jobs:
           
 
   install-oc-ubuntu-2404:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
